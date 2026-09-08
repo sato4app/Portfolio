@@ -12,6 +12,10 @@ const publicProjectsDirectory = path.join(process.cwd(), 'public', 'projects');
 
 // 画像として扱う拡張子
 const IMAGE_PATTERN = /\.(png|jpe?g|gif|svg|webp|avif)$/i;
+// 詳細ページの本文として読み込むファイル名の候補（先に見つかったものを使う）
+const BODY_CANDIDATES = ['README.md', 'readme.md', 'README.markdown'];
+// 画像コピー時に無視するフォルダ（リポジトリごとコピーされた場合の保険）
+const IGNORED_DIRS = new Set(['node_modules', '.git', '.next', 'out', 'dist', 'build']);
 
 // next.config.mjs の basePath。ビルド時に埋め込まれる
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -25,12 +29,17 @@ export type ProjectFrontmatter = {
   thumbnail: string | null;
   repo: string | null;
   demo: string | null;
+  /** README.md 内の相対リンクを GitHub 上のURLへ変換するときに使うブランチ名 */
+  branch: string;
 };
 
 export type Project = {
   slug: string;
   frontmatter: ProjectFrontmatter;
+  /** 詳細ページに表示する本文（Markdown） */
   content: string;
+  /** 本文の取得元。README.md が無ければ index.md の本文にフォールバックする */
+  bodySource: 'readme' | 'index';
 };
 
 /**
@@ -51,16 +60,16 @@ function normalizeDate(value: unknown): string {
 }
 
 function normalizeFrontmatter(data: Record<string, unknown>, slug: string): ProjectFrontmatter {
-  const tags = Array.isArray(data.tags) ? data.tags.map(String) : [];
   return {
     title: typeof data.title === 'string' ? data.title : slug,
     date: normalizeDate(data.date),
     category: typeof data.category === 'string' ? data.category : 'その他',
     summary: typeof data.summary === 'string' ? data.summary : '',
-    tags,
+    tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     thumbnail: typeof data.thumbnail === 'string' ? data.thumbnail : null,
     repo: typeof data.repo === 'string' ? data.repo : null,
     demo: typeof data.demo === 'string' ? data.demo : null,
+    branch: typeof data.branch === 'string' ? data.branch : 'main',
   };
 }
 
@@ -80,46 +89,98 @@ export function getProjectSlugs(): string[] {
 }
 
 /**
+ * プロジェクトフォルダ内の画像を public/projects/[slug]/ へコピーする。
+ * README.md が images/ などのサブフォルダを参照していても動くよう再帰的にコピーする。
+ */
+function copyProjectImages(projectDir: string, publicTargetDir: string, relative = ''): void {
+  const entries = fs.readdirSync(path.join(projectDir, relative), { withFileTypes: true });
+
+  for (const entry of entries) {
+    const relativePath = relative ? path.join(relative, entry.name) : entry.name;
+
+    if (entry.isDirectory()) {
+      if (!IGNORED_DIRS.has(entry.name)) {
+        copyProjectImages(projectDir, publicTargetDir, relativePath);
+      }
+      continue;
+    }
+
+    // 画像ファイルのみを対象とする（index.md や README.md はコピーしない）
+    if (!IMAGE_PATTERN.test(entry.name)) continue;
+
+    const destPath = path.join(publicTargetDir, relativePath);
+    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    // 画像ファイルを public/ 側へ上書きコピー
+    fs.copyFileSync(path.join(projectDir, relativePath), destPath);
+  }
+}
+
+/**
+ * 詳細ページの見出しは Frontmatter の title を使うため、
+ * README.md 冒頭の見出し1（タイトル行）があれば取り除いて重複を防ぐ。
+ */
+function stripLeadingHeading(markdown: string): string {
+  const lines = markdown.split(/\r?\n/);
+
+  let index = 0;
+  while (index < lines.length && lines[index].trim() === '') index++;
+  if (index >= lines.length) return markdown;
+
+  // ATX形式（# タイトル）
+  if (/^#\s+\S/.test(lines[index])) {
+    lines.splice(index, 1);
+    return lines.join('\n');
+  }
+
+  // Setext形式（タイトルの次行が === ）
+  if (index + 1 < lines.length && /^=+\s*$/.test(lines[index + 1])) {
+    lines.splice(index, 2);
+    return lines.join('\n');
+  }
+
+  return markdown;
+}
+
+/**
+ * 詳細ページの本文を読み込む。
+ * リポジトリからコピーした README.md を優先し、無ければ index.md の本文を使う。
+ */
+function readBody(projectDir: string, indexContent: string): Pick<Project, 'content' | 'bodySource'> {
+  for (const name of BODY_CANDIDATES) {
+    const bodyPath = path.join(projectDir, name);
+    if (!fs.existsSync(bodyPath)) continue;
+
+    // 念のため README.md 側に Frontmatter があっても取り除いておく
+    const { content } = matter(fs.readFileSync(bodyPath, 'utf8'));
+    return { content: stripLeadingHeading(content), bodySource: 'readme' };
+  }
+
+  return { content: indexContent, bodySource: 'index' };
+}
+
+/**
  * 指定したプロジェクト（フォルダ名）のMarkdownと画像を処理する関数
  */
 export function getProjectBySlug(slug: string): Project {
-  // 1. Markdownの読み込み
   const projectDir = path.join(projectsDirectory, slug);
-  const fullPath = path.join(projectDir, 'index.md');
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-  // gray-matterで Frontmatter(data) と 本文(content) に分割
-  const { data, content } = matter(fileContents);
+  // 1. index.md から Frontmatter を読み込む
+  const { data, content: indexContent } = matter(
+    fs.readFileSync(path.join(projectDir, 'index.md'), 'utf8')
+  );
 
-  // ----------------------------------------------------
-  // 2. 画像の自動コピー処理
-  // ----------------------------------------------------
+  // 2. 詳細ページの本文（README.md）を読み込む
+  const body = readBody(projectDir, indexContent);
+
+  // 3. 画像を public/projects/[slug]/ へ上書きコピーする
   const publicTargetDir = path.join(publicProjectsDirectory, slug);
-
-  // コピー先の public/projects/[slug] フォルダがなければ作成
-  if (!fs.existsSync(publicTargetDir)) {
-    fs.mkdirSync(publicTargetDir, { recursive: true });
-  }
-
-  // プロジェクトフォルダ内のファイル一覧を取得
-  const files = fs.readdirSync(projectDir);
-
-  files.forEach((file) => {
-    // index.md 以外の画像ファイルを対象とする（.png, .jpg, .gif など）
-    if (file !== 'index.md' && IMAGE_PATTERN.test(file)) {
-      const srcPath = path.join(projectDir, file);
-      const destPath = path.join(publicTargetDir, file);
-
-      // 画像ファイルを public/ 側へ上書きコピー
-      fs.copyFileSync(srcPath, destPath);
-    }
-  });
-  // ----------------------------------------------------
+  fs.mkdirSync(publicTargetDir, { recursive: true });
+  copyProjectImages(projectDir, publicTargetDir);
 
   return {
     slug,
-    frontmatter: normalizeFrontmatter(data, slug), // title, date, tags などの情報
-    content, // Markdownの本文
+    frontmatter: normalizeFrontmatter(data, slug),
+    ...body,
   };
 }
 
@@ -127,30 +188,56 @@ export function getProjectBySlug(slug: string): Project {
  * 全てのプロジェクトデータを取得する関数（トップページの一覧表示などに使う）
  */
 export function getAllProjects(): Project[] {
-  const slugs = getProjectSlugs();
-  const projects = slugs.map((slug) => getProjectBySlug(slug));
+  const projects = getProjectSlugs().map((slug) => getProjectBySlug(slug));
 
   // 日付の新しい順に並び替え
   return projects.sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1));
 }
 
 /**
- * Markdown本文をHTMLへ変換する。
- * index.md 内で `![](thumbnail.png)` のように相対指定された画像は
- * public/projects/[slug]/ を指すURLへ書き換える。
+ * 本文のMarkdownをHTMLへ変換する。
+ * README.md をそのままコピーしても表示が崩れないよう、
+ * 相対指定の画像とリンクを解決してから返す。
  */
-export async function renderMarkdown(content: string, slug: string): Promise<string> {
-  const processed = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content);
-  return resolveImageSources(String(processed), slug);
+export async function renderProjectBody(project: Project): Promise<string> {
+  const processed = await remark()
+    .use(remarkGfm)
+    .use(remarkHtml, { sanitize: false })
+    .process(project.content);
+
+  const html = resolveImageSources(String(processed), project.slug);
+  return resolveRelativeLinks(html, project.frontmatter);
 }
 
+/** 相対指定の画像を public/projects/[slug]/ を指すURLへ書き換える */
 function resolveImageSources(html: string, slug: string): string {
   return html.replace(/(<img[^>]*\ssrc=")([^"]*)(")/g, (match, prefix, src: string, suffix) => {
     // 外部URL・データURIはそのまま
-    if (/^(https?:)?\/\//i.test(src) || src.startsWith('data:')) return match;
+    if (isExternal(src)) return match;
     // ルート相対指定は basePath だけ補う
     if (src.startsWith('/')) return `${prefix}${basePath}${src}${suffix}`;
     // それ以外は projects/[slug]/ からの相対指定とみなす
     return `${prefix}${assetUrl(slug, src.replace(/^\.\//, ''))}${suffix}`;
   });
+}
+
+/**
+ * README.md 内の相対リンク（docs/spec.md など）はコピーすると壊れるため、
+ * repo が指定されていれば GitHub 上のファイルURLへ変換する。
+ */
+function resolveRelativeLinks(html: string, frontmatter: ProjectFrontmatter): string {
+  const { repo, branch } = frontmatter;
+  if (!repo) return html;
+
+  const repoBase = repo.replace(/\/+$/, '');
+
+  return html.replace(/(<a[^>]*\shref=")([^"]*)(")/g, (match, prefix, href: string, suffix) => {
+    // 外部URL・ページ内アンカー・ルート相対はそのまま
+    if (isExternal(href) || href.startsWith('/') || href.startsWith('#')) return match;
+    return `${prefix}${repoBase}/blob/${branch}/${href.replace(/^\.\//, '')}${suffix}`;
+  });
+}
+
+function isExternal(url: string): boolean {
+  return /^(https?:)?\/\//i.test(url) || /^(data|mailto|tel):/i.test(url);
 }

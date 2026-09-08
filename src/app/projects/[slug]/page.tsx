@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import {
   getProjectBySlug,
   getProjectSlugs,
-  renderMarkdown,
+  renderProjectBody,
 } from "@/lib/markdown";
 
 // generateStaticParams で列挙したページ以外は 404 にする
@@ -32,8 +32,9 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   const { slug } = await params;
   if (!getProjectSlugs().includes(slug)) notFound();
 
-  const { frontmatter, content } = getProjectBySlug(slug);
-  const html = await renderMarkdown(content, slug);
+  const project = getProjectBySlug(slug);
+  const { frontmatter } = project;
+  const html = await renderProjectBody(project);
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
