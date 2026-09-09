@@ -34,7 +34,7 @@ function ProjectCard({ project }: { project: Project }) {
         href={`/projects/${slug}`}
         className="group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-card transition hover:border-accent"
       >
-        <div className="relative aspect-[16/9] overflow-hidden border-b border-line bg-background">
+        <div className="relative aspect-video overflow-hidden border-b border-line bg-background">
           {dateBadge && (
             <span className="absolute left-2 top-2 z-10 rounded-full bg-foreground/85 px-2 py-0.5 text-xs font-bold text-background">
               {dateBadge}
