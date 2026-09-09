@@ -35,7 +35,7 @@ cp -r template projects/<リポジトリ名>
 コピーしたら次の3つを行います。
 
 1. `index.md` の空欄を埋める
-2. `thumbnail.png` を実際の画像に差し替える（ダミー画像が入っています）
+2. サムネイル画像を置き、`index.md` の `thumbnail` にファイル名を書く
 3. 元リポジトリの `README.md` をコピーしてくる
 
 `notes.md` は空のままで構いません（中身が無ければ表示されません）。
@@ -50,7 +50,7 @@ projects/
     ├── index.md        # 一覧カード用の情報（Frontmatterのみ）
     ├── README.md       # 詳細ページの本文（元リポジトリからコピー）
     ├── notes.md        # 今後の予定メモ（空でよい）
-    └── thumbnail.png   # 画像
+    └── icon-512.png    # サムネイル画像
 ```
 
 | ファイル | 役割 | 用意の仕方 |
@@ -59,6 +59,11 @@ projects/
 | `README.md` | 詳細ページの本文 | 元リポジトリの `README.md` を**手動でコピー** |
 | `notes.md` | 今後の予定・改善メモ | 手書き（省略可。空ファイルでもよい） |
 | 画像 | サムネイル・本文中の画像 | 元リポジトリからコピー |
+
+サムネイルは元リポジトリのアイコン画像（`icon-512.png` など）をそのまま使うのが基本です。
+アイコンが無いリポジトリでは、`/new-project` がリポジトリ名を入れた
+格子模様の `thumbnail.svg`（640×360）を生成します。カード枠と同じ16:9なので
+左右に余白が出ず、閲覧者のテーマ（ライト／ダーク）にも追従します。
 
 ### index.md（Frontmatterのみ）
 
@@ -71,7 +76,7 @@ summary: 一覧カードに表示する短い説明
 tags:
   - Leaflet.js
   - Firebase
-thumbnail: thumbnail.png             # 一覧カードのサムネイル（省略可）
+thumbnail: icon-512.png              # 一覧カードのサムネイル（省略可。svgも可）
 repo: https://github.com/sato4app/minoh-hiking   # 省略可
 demo: https://sato4app.github.io/minoh-hiking/   # 省略可
 branch: main                         # 省略可（既定値: main）
@@ -180,20 +185,18 @@ GitHub Pages へ自動デプロイされます。
 Portfolio/
 ├── template/                   # 新規プロジェクトの雛形（コピー元）
 │   ├── index.md                # 空欄のFrontmatter
-│   ├── notes.md                # 空ファイル
-│   └── thumbnail.png           # 差し替え用のダミー画像
+│   └── notes.md                # 空ファイル
 ├── projects/                   # 各プロジェクトの原稿
 │   ├── minoh-hiking/
 │   │   ├── index.md            # Frontmatter（一覧カード用）
 │   │   ├── README.md           # 詳細ページの本文
 │   │   ├── notes.md            # 今後の予定メモ（空でよい）
-│   │   └── thumbnail.png
+│   │   └── icon-512-v2.png     # サムネイル
 │   └── gnss-scope/
 │       ├── index.md
 │       ├── README.md
 │       ├── notes.md
-│       ├── circuit.png
-│       └── images/wiring.png   # サブフォルダの画像もコピーされる
+│       └── icon-512.png
 ├── public/
 │   ├── .nojekyll               # GitHub Pages が _next/ を無視しないようにする
 │   └── projects/               # ビルド時に自動生成（Git管理対象外）

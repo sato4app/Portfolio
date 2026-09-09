@@ -7,7 +7,7 @@ date:
 category:
 summary:
 tags:
-thumbnail: thumbnail.png
+thumbnail:
 repo:
 demo:
 ---
