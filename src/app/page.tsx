@@ -89,7 +89,8 @@ export default function Home() {
     <div className="mx-auto max-w-5xl px-6 py-12">
       <h1 className="text-3xl font-bold tracking-tight">Portfolio</h1>
       <p className="mt-3 text-muted">
-        これまでに作成したアプリ・ツール・電子工作の一覧です。
+        これまでに作成したアプリ・ツール・電子工作の一覧<br />
+        オープンソースを基本として、興味のあるものを作成していく予定
       </p>
 
       {groups.length === 0 ? (
