@@ -20,6 +20,14 @@ const IGNORED_DIRS = new Set(['node_modules', '.git', '.next', 'out', 'dist', 'b
 // next.config.mjs の basePath。ビルド時に埋め込まれる
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
+/**
+ * date が暦の日付（2026 / 2026-01 / 2026-01-15）かどうかを判定する。
+ * 「（未作成）」のような日付以外の文字列は、一覧でバッジとして表示し、並び順を末尾にする。
+ */
+export function isCalendarDate(value: string): boolean {
+  return /^\d{4}(-\d{2}(-\d{2})?)?$/.test(value);
+}
+
 export type ProjectFrontmatter = {
   title: string;
   date: string;
@@ -190,8 +198,20 @@ export function getProjectBySlug(slug: string): Project {
 export function getAllProjects(): Project[] {
   const projects = getProjectSlugs().map((slug) => getProjectBySlug(slug));
 
-  // 日付の新しい順に並び替え
-  return projects.sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1));
+  // 日付の新しい順に並び替える。
+  // 「（未作成）」のような日付以外と未記入は、日付を持つものより後ろへまとめる。
+  return projects.sort((a, b) => {
+    const dateA = a.frontmatter.date;
+    const dateB = b.frontmatter.date;
+    const isDateA = isCalendarDate(dateA);
+    const isDateB = isCalendarDate(dateB);
+
+    if (isDateA !== isDateB) return isDateA ? -1 : 1;
+    // 双方とも日付でない場合は、フォルダ名順（読み込み順）を保つ
+    if (!isDateA) return 0;
+
+    return dateA < dateB ? 1 : -1;
+  });
 }
 
 /**

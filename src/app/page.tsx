@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { assetUrl, getAllProjects, type Project } from "@/lib/markdown";
+import { assetUrl, getAllProjects, isCalendarDate, type Project } from "@/lib/markdown";
 
 // README.md の並びに合わせたカテゴリの表示順。ここに無いカテゴリは末尾へ回す
 const CATEGORY_ORDER = ["ハイキングアプリ", "アプリ", "電子工作", "ツール(PC用)"];
@@ -25,6 +25,8 @@ function groupByCategory(projects: Project[]): [string, Project[]][] {
 
 function ProjectCard({ project }: { project: Project }) {
   const { slug, frontmatter } = project;
+  // date が「（未作成）」のような日付以外のときだけ、その文字列をバッジとして出す
+  const dateBadge = isCalendarDate(frontmatter.date) ? null : frontmatter.date;
 
   return (
     <li>
@@ -32,7 +34,12 @@ function ProjectCard({ project }: { project: Project }) {
         href={`/projects/${slug}`}
         className="group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-card transition hover:border-accent"
       >
-        <div className="aspect-[16/9] overflow-hidden border-b border-line bg-background">
+        <div className="relative aspect-[16/9] overflow-hidden border-b border-line bg-background">
+          {dateBadge && (
+            <span className="absolute left-2 top-2 z-10 rounded-full bg-foreground/85 px-2 py-0.5 text-xs font-bold text-background">
+              {dateBadge}
+            </span>
+          )}
           {frontmatter.thumbnail ? (
             /* 静的エクスポートのため next/image ではなく <img> を使い、basePath は assetUrl で付与する */
             <img

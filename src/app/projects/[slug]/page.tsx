@@ -86,11 +86,18 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         </div>
       </header>
 
-      {/* 本文は自分で書いた index.md のみを読み込むため、HTMLをそのまま描画する */}
-      <div
-        className="markdown-body mt-8"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      {/* 本文は自分で書いた README.md / index.md のみを読み込むため、HTMLをそのまま描画する */}
+      {html.trim() ? (
+        <div
+          className="markdown-body mt-8"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      ) : (
+        /* 未作成のアプリなど、本文がまだ無い場合 */
+        <p className="mt-8 rounded-xl border border-line bg-card p-6 text-muted">
+          詳細はまだありません。
+        </p>
+      )}
     </article>
   );
 }
