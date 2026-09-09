@@ -41,7 +41,7 @@ function ProjectCard({ project }: { project: Project }) {
               width={1200}
               height={630}
               loading="lazy"
-              className="h-full w-full object-cover transition group-hover:scale-[1.03]"
+              className="h-full w-full object-contain transition group-hover:scale-[1.03]"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-sm text-muted">
