@@ -6,7 +6,7 @@ summary: GNSSモジュールの測位状況をリアルタイムに可視化す�
 tags:
   - GNSS
   - Raspberry Pi Pico
-  - 電子工作
+  - Android
 thumbnail: icon-512.png
 repo: https://github.com/sato4app/gnss-scope/
 demo: https://sato4app.github.io/gnss-scope/
