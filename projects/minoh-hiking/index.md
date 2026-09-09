@@ -8,6 +8,6 @@ tags:
   - PWA
 thumbnail: icon-512-v2.png
 repo: https://github.com/sato4app/minoh-hiking
-demo: https://sato4app.github.io/minoh-hiking/
+demo: https://minoh-hiking.vercel.app/
 branch: main
 ---
