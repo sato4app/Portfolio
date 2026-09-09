@@ -5,7 +5,7 @@ category: ツール(PC用)
 summary: 画像ファイル(png, jpeg, heic)を、アイコン用画像(png)に変換
 tags:
   - heic-to (CDN)
-thumbnail: Profile-192.png
+thumbnail: thumbnail.png
 repo: https://github.com/sato4app/ResizeImage/
 demo: https://sato4app.github.io/ResizeImage/
 branch: main

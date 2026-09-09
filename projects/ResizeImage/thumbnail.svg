@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img" aria-label="ResizeImage">
+  <style>
+    .bg    { fill: #eef0f3 }
+    .line  { stroke: #cbd2da }
+    .plate { fill: #ffffff; fill-opacity: .92 }
+    .name  { fill: #4d5763 }
+    @media (prefers-color-scheme: dark) {
+      .bg    { fill: #161b22 }
+      .line  { stroke: #2b323c }
+      .plate { fill: #0d1117; fill-opacity: .82 }
+      .name  { fill: #9aa4b2 }
+    }
+  </style>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <rect class="bg" width="32" height="32"/>
+      <path class="line" d="M32 0 H0 V32" fill="none" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="360" fill="url(#grid)"/>
+  <rect class="plate" x="40" y="114.5" width="560" height="131" rx="16"/>
+  <text class="name" x="320" y="180" text-anchor="middle" dominant-baseline="central"
+        font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="82" font-weight="700">ResizeImage</text>
+</svg>
