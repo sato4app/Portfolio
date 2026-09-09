@@ -28,6 +28,7 @@ projects/
 └── minoh-hiking/
     ├── index.md        # 一覧カード用の情報（Frontmatterのみ）
     ├── README.md       # 詳細ページの本文（元リポジトリからコピー）
+    ├── notes.md        # 今後の予定メモ（空でよい）
     └── thumbnail.png   # 画像
 ```
 
@@ -35,6 +36,7 @@ projects/
 | --- | --- | --- |
 | `index.md` | 一覧カードに出す情報 | 手書き（Frontmatterだけ。本文は不要） |
 | `README.md` | 詳細ページの本文 | 元リポジトリの `README.md` を**手動でコピー** |
+| `notes.md` | 今後の予定・改善メモ | 手書き（省略可。空ファイルでもよい） |
 | 画像 | サムネイル・本文中の画像 | 元リポジトリからコピー |
 
 ### index.md（Frontmatterのみ）
@@ -101,6 +103,25 @@ summary: 一覧カードに表示する短い説明
 | 相対指定の画像を `public/projects/<slug>/` へ解決 | `basePath`（`/Portfolio`）を自動で付与する |
 | 相対指定のリンク（`docs/spec.md` など）を GitHub のURLへ変換 | コピーした README のリンク切れを防ぐ。`repo` の指定が必要 |
 
+### notes.md（今後の予定）
+
+機能追加や改善点のメモを書くファイルです。詳細ページの本文の下に
+「今後の予定」という枠で表示されます。
+
+**`README.md` ではなく `notes.md` に書いてください。** `README.md` は元リポジトリから
+コピーし直したときに上書きされるため、書いたメモが消えます。`notes.md` は
+コピー対象ではないので残ります。
+
+```markdown
+- オフライン地図のキャッシュ対応
+- 標高グラフの追加
+- ルート編集のアンドゥ機能
+```
+
+- **空ファイルのまま置いても構いません。** 中身が無ければセクションごと表示されません
+- ファイル自体が無くても構いません
+- 画像やリンクの解決は `README.md` と同じ扱いです（相対指定の画像は `projects/<slug>/` から、相対リンクは `repo` のURLへ変換）
+
 ### 画像の扱い
 
 - `projects/<slug>/` に置いた画像は、ビルド時に `public/projects/<slug>/` へ**再帰的に**自動コピーされます
@@ -140,10 +161,12 @@ Portfolio/
 │   ├── minoh-hiking/
 │   │   ├── index.md            # Frontmatter（一覧カード用）
 │   │   ├── README.md           # 詳細ページの本文
+│   │   ├── notes.md            # 今後の予定メモ（空でよい）
 │   │   └── thumbnail.png
 │   └── gnss-scope/
 │       ├── index.md
 │       ├── README.md
+│       ├── notes.md
 │       ├── circuit.png
 │       └── images/wiring.png   # サブフォルダの画像もコピーされる
 ├── public/

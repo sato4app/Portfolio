@@ -14,6 +14,8 @@ const publicProjectsDirectory = path.join(process.cwd(), 'public', 'projects');
 const IMAGE_PATTERN = /\.(png|jpe?g|gif|svg|webp|avif)$/i;
 // 詳細ページの本文として読み込むファイル名の候補（先に見つかったものを使う）
 const BODY_CANDIDATES = ['README.md', 'readme.md', 'README.markdown'];
+// 「今後の予定」として読み込むファイル名の候補
+const NOTES_CANDIDATES = ['notes.md', 'NOTES.md'];
 // 画像コピー時に無視するフォルダ（リポジトリごとコピーされた場合の保険）
 const IGNORED_DIRS = new Set(['node_modules', '.git', '.next', 'out', 'dist', 'build']);
 
@@ -48,6 +50,8 @@ export type Project = {
   content: string;
   /** 本文の取得元。README.md が無ければ index.md の本文にフォールバックする */
   bodySource: 'readme' | 'index';
+  /** 「今後の予定」のメモ（Markdown）。notes.md が無い・空なら空文字 */
+  notes: string;
 };
 
 /**
@@ -167,6 +171,23 @@ function readBody(projectDir: string, indexContent: string): Pick<Project, 'cont
 }
 
 /**
+ * 「今後の予定」のメモを読み込む。
+ * README.md と違い元リポジトリからのコピーで上書きされないため、
+ * 機能追加や改善点はこちらに書く。空ファイルのまま置いても表示は増えない。
+ */
+function readNotes(projectDir: string): string {
+  for (const name of NOTES_CANDIDATES) {
+    const notesPath = path.join(projectDir, name);
+    if (!fs.existsSync(notesPath)) continue;
+
+    // 先頭の --- を Frontmatter と誤認しないよう、gray-matter を通さずそのまま読む
+    return fs.readFileSync(notesPath, 'utf8').trim();
+  }
+
+  return '';
+}
+
+/**
  * 指定したプロジェクト（フォルダ名）のMarkdownと画像を処理する関数
  */
 export function getProjectBySlug(slug: string): Project {
@@ -189,6 +210,7 @@ export function getProjectBySlug(slug: string): Project {
     slug,
     frontmatter: normalizeFrontmatter(data, slug),
     ...body,
+    notes: readNotes(projectDir),
   };
 }
 
@@ -220,10 +242,24 @@ export function getAllProjects(): Project[] {
  * 相対指定の画像とリンクを解決してから返す。
  */
 export async function renderProjectBody(project: Project): Promise<string> {
+  return toHtml(project.content, project);
+}
+
+/**
+ * 「今後の予定」のメモをHTMLへ変換する。
+ * notes.md が無い、または空ファイルの場合は空文字を返す（セクションごと表示しない）。
+ */
+export async function renderProjectNotes(project: Project): Promise<string> {
+  return toHtml(project.notes, project);
+}
+
+async function toHtml(markdown: string, project: Project): Promise<string> {
+  if (!markdown.trim()) return '';
+
   const processed = await remark()
     .use(remarkGfm)
     .use(remarkHtml, { sanitize: false })
-    .process(project.content);
+    .process(markdown);
 
   const html = resolveImageSources(String(processed), project.slug);
   return resolveRelativeLinks(html, project.frontmatter);

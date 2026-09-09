@@ -5,6 +5,7 @@ import {
   getProjectBySlug,
   getProjectSlugs,
   renderProjectBody,
+  renderProjectNotes,
 } from "@/lib/markdown";
 
 // generateStaticParams で列挙したページ以外は 404 にする
@@ -35,6 +36,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   const project = getProjectBySlug(slug);
   const { frontmatter } = project;
   const html = await renderProjectBody(project);
+  // notes.md が無い・空ファイルのときは空文字になり、セクションごと表示しない
+  const notesHtml = await renderProjectNotes(project);
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
@@ -97,6 +100,17 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         <p className="mt-8 rounded-xl border border-line bg-card p-6 text-muted">
           詳細はまだありません。
         </p>
+      )}
+
+      {/* notes.md（機能追加・改善点のメモ）。本文とは別枠にして区別する */}
+      {notesHtml && (
+        <section className="mt-12 rounded-xl border border-line bg-card p-6">
+          <h2 className="text-sm font-bold tracking-widest text-muted">今後の予定</h2>
+          <div
+            className="markdown-body mt-3"
+            dangerouslySetInnerHTML={{ __html: notesHtml }}
+          />
+        </section>
       )}
     </article>
   );
