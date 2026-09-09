@@ -77,7 +77,13 @@ function normalizeFrontmatter(data: Record<string, unknown>, slug: string): Proj
     date: normalizeDate(data.date),
     category: typeof data.category === 'string' ? data.category : 'その他',
     summary: typeof data.summary === 'string' ? data.summary : '',
-    tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
+    // テンプレートの「- だけ残った行」が "null" というタグにならないよう空要素を除く
+    tags: Array.isArray(data.tags)
+      ? data.tags
+          .filter((tag) => tag !== null && tag !== undefined)
+          .map(String)
+          .filter((tag) => tag.trim() !== '')
+      : [],
     thumbnail: typeof data.thumbnail === 'string' ? data.thumbnail : null,
     repo: typeof data.repo === 'string' ? data.repo : null,
     demo: typeof data.demo === 'string' ? data.demo : null,

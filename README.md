@@ -21,7 +21,28 @@
 
 ## プロジェクトの追加方法
 
-`projects/` の下にリポジトリ名と同じ名前のフォルダを作り、次の2ファイルを置きます。
+`template/` に雛形を置いてあります。フォルダごとコピーして、
+リポジトリ名と同じ名前に変えるのが一番早い手順です。
+
+```bash
+# Windows (PowerShell)
+Copy-Item -Recurse template projects/<リポジトリ名>
+
+# Git Bash / macOS / Linux
+cp -r template projects/<リポジトリ名>
+```
+
+コピーしたら次の3つを行います。
+
+1. `index.md` の空欄を埋める
+2. `thumbnail.png` を実際の画像に差し替える（ダミー画像が入っています）
+3. 元リポジトリの `README.md` をコピーしてくる
+
+`notes.md` は空のままで構いません（中身が無ければ表示されません）。
+
+### フォルダの中身
+
+`projects/` の下にリポジトリ名と同じ名前のフォルダを作り、次のファイルを置きます。
 
 ```
 projects/
@@ -157,6 +178,10 @@ GitHub Pages へ自動デプロイされます。
 
 ```
 Portfolio/
+├── template/                   # 新規プロジェクトの雛形（コピー元）
+│   ├── index.md                # 空欄のFrontmatter
+│   ├── notes.md                # 空ファイル
+│   └── thumbnail.png           # 差し替え用のダミー画像
 ├── projects/                   # 各プロジェクトの原稿
 │   ├── minoh-hiking/
 │   │   ├── index.md            # Frontmatter（一覧カード用）
