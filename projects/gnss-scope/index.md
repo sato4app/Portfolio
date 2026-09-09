@@ -1,6 +1,6 @@
 ---
 title: GNSSスコープ
-date: 2025-11-02
+date: 2026-08-08
 category: 電子工作
 summary: GNSSモジュールの測位状況をリアルタイムに可視化する自作の計測ツール
 tags:
