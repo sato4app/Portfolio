@@ -2,7 +2,7 @@ import Link from "next/link";
 import { assetUrl, getAllProjects, isCalendarDate, type Project } from "@/lib/markdown";
 
 // README.md の並びに合わせたカテゴリの表示順。ここに無いカテゴリは末尾へ回す
-const CATEGORY_ORDER = ["ハイキングアプリ", "アプリ", "電子工作", "ツール(PC用)"];
+const CATEGORY_ORDER = ["ハイキングアプリ", "アプリ(PWA対応)", "電子工作", "ツール(PC用)", "その他"];
 
 function groupByCategory(projects: Project[]): [string, Project[]][] {
   const groups = new Map<string, Project[]>();

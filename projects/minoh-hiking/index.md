@@ -9,5 +9,4 @@ tags:
 thumbnail: icon-512-v2.png
 repo: https://github.com/sato4app/minoh-hiking
 demo: https://minoh-hiking.vercel.app/
-branch: main
 ---
