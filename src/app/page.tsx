@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { assetUrl, getAllProjects, isCalendarDate, type Project } from "@/lib/markdown";
+import {
+  assetUrl,
+  compareByDateDesc,
+  getAllProjects,
+  isCalendarDate,
+  type Project,
+} from "@/lib/markdown";
 
 // README.md の並びに合わせたカテゴリの表示順。ここに無いカテゴリは末尾へ回す
 const CATEGORY_ORDER = ["ハイキングアプリ", "アプリ(PWA対応)", "電子工作", "ツール(PC用)", "その他"];
@@ -12,6 +18,9 @@ function groupByCategory(projects: Project[]): [string, Project[]][] {
     if (list) list.push(project);
     else groups.set(category, [project]);
   }
+
+  // カテゴリ内も日付の新しい順（日付以外は後ろ）に揃える
+  for (const list of groups.values()) list.sort(compareByDateDesc);
 
   return [...groups.entries()].sort(([a], [b]) => {
     const indexA = CATEGORY_ORDER.indexOf(a);

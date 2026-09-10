@@ -221,25 +221,28 @@ export function getProjectBySlug(slug: string): Project {
 }
 
 /**
+ * 一覧の並び順。日付の新しいものから古いものへ並べ、
+ * 「（未作成）」のような日付以外と未記入は、日付を持つものより後ろへまとめる。
+ * カテゴリ内の並びにも同じ規則を使うため、比較関数として切り出している。
+ */
+export function compareByDateDesc(a: Project, b: Project): number {
+  const dateA = a.frontmatter.date;
+  const dateB = b.frontmatter.date;
+  const isDateA = isCalendarDate(dateA);
+  const isDateB = isCalendarDate(dateB);
+
+  if (isDateA !== isDateB) return isDateA ? -1 : 1;
+  // 双方とも日付でない場合も、同じ日付どうしと同様にフォルダ名順（読み込み順）を保つ
+  if (!isDateA || dateA === dateB) return 0;
+
+  return dateA < dateB ? 1 : -1;
+}
+
+/**
  * 全てのプロジェクトデータを取得する関数（トップページの一覧表示などに使う）
  */
 export function getAllProjects(): Project[] {
-  const projects = getProjectSlugs().map((slug) => getProjectBySlug(slug));
-
-  // 日付の新しい順に並び替える。
-  // 「（未作成）」のような日付以外と未記入は、日付を持つものより後ろへまとめる。
-  return projects.sort((a, b) => {
-    const dateA = a.frontmatter.date;
-    const dateB = b.frontmatter.date;
-    const isDateA = isCalendarDate(dateA);
-    const isDateB = isCalendarDate(dateB);
-
-    if (isDateA !== isDateB) return isDateA ? -1 : 1;
-    // 双方とも日付でない場合は、フォルダ名順（読み込み順）を保つ
-    if (!isDateA) return 0;
-
-    return dateA < dateB ? 1 : -1;
-  });
+  return getProjectSlugs().map((slug) => getProjectBySlug(slug)).sort(compareByDateDesc);
 }
 
 /**
