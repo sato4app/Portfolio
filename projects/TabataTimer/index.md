@@ -5,7 +5,7 @@
 title: タバタタイマー
 date: 2026-09-10
 category: アプリ(PWA対応)
-summary: タバタプロトコル専用に準備・運動・休憩とセット数を設定して実行する高強度インターバルタイマー
+summary: タバタプロトコル専用に準備・運動・休憩とセット数を設定して実行するHIITタイマー
 tags:
   - React
   - Tailwind CSS
