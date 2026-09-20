@@ -212,3 +212,19 @@ Portfolio/
 ├── next.config.mjs             # basePath: '/Portfolio'
 └── .github/workflows/deploy.yml
 ```
+
+## ライセンス
+
+ソースコードは [MIT License](LICENSE) で公開しています（Copyright (c) 2026 sato4app）。
+
+ただし、**次のものは MIT License の対象外**です。
+
+| 場所 | 内容 | 扱い |
+| --- | --- | --- |
+| `src/app/favicon.ico` | Next.js の雛形（create-next-app）に付属する既定のアイコン | 提供元の利用条件に従う |
+| `node_modules/` | npm から取得する外部パッケージ（Next.js、React、Tailwind CSS など） | 本リポジトリに含まれない。それぞれの提供元の利用条件に従う |
+
+※ `projects/<リポジトリ名>/` に置いているアイコン画像は、各アプリのリポジトリから
+コピーしたものです。生成AI で作成したものを含み、それらについて著作権は主張していません。
+扱いはコピー元のリポジトリの README にそろえています。
+MIT License はソースコードに対するものです。
