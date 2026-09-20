@@ -7,6 +7,7 @@ date: 2026-09-10
 category: ツール(PC用)
 summary: 変更前後を一覧で確認してからフォルダ内のファイル名をまとめて変更するWindows用デスクトップアプリ
 tags:
+  - OSS
   - Python
   - tkinter
   - Windows

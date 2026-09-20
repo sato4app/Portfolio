@@ -4,6 +4,7 @@ date: 2026-09-07
 category: ハイキングアプリ
 summary: 大阪府箕面の公式ハイキングマップを、国土地理院地図の上に現在地とあわせて表示
 tags:
+  - OSS
   - Leaflet.js
   - PWA
 thumbnail: icon-512-v2.png

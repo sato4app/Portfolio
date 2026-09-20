@@ -7,6 +7,7 @@ date: 2026-05-21
 category: アプリ(PWA対応)
 summary: クレジットカードの利用をカード名・場所・日付・金額で手軽に記録するPWA
 tags:
+  - OSS
   - React
   - Tailwind CSS
 thumbnail: icon-512.png

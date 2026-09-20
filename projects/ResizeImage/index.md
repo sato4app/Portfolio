@@ -4,6 +4,7 @@ date: 2026-09-09
 category: ツール(PC用)
 summary: 画像ファイル(png, jpeg, heic)を、アイコン用画像(png)に変換
 tags:
+  - OSS
   - heic-to (CDN)
 thumbnail: thumbnail.svg
 repo: https://github.com/sato4app/ResizeImage/

@@ -4,6 +4,7 @@ date: 2026-08-08
 category: 電子工作
 summary: GNSSモジュールの測位状況をリアルタイムに可視化する自作の計測ツール
 tags:
+  - OSS
   - GNSS
   - Raspberry Pi Pico
   - Android

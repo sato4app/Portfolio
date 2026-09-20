@@ -7,6 +7,7 @@ date: 2026-09-02
 category: アプリ(PWA対応)
 summary: タバタ式タイマー的な、準備・運動・休憩を指定回数繰り返すPWAの運動タイマー
 tags:
+  - OSS
   - React
   - Tailwind CSS
 thumbnail: icon-512.png
