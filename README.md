@@ -78,7 +78,7 @@ tags:
   - Firebase
 thumbnail: icon-512.png              # 一覧カードのサムネイル（省略可。svgも可）
 repo: https://github.com/sato4app/minoh-hiking   # 省略可
-demo: https://sato4app.github.io/minoh-hiking/   # 省略可
+site: https://sato4app.github.io/minoh-hiking/   # 省略可
 branch: main                         # 省略可（既定値: main）
 ---
 ```
@@ -106,7 +106,7 @@ branch: main                         # 省略可（既定値: main）
 #### 未作成のアプリを載せる
 
 まだ作っていないアプリも、`index.md` だけ置けばエントリとして並べられます。
-`README.md`・サムネイル・`repo`・`demo` はすべて省略できます。
+`README.md`・サムネイル・`repo`・`site` はすべて省略できます。
 本文が無い場合、詳細ページには「詳細はまだありません。」と表示されます。
 
 ```markdown

@@ -13,5 +13,5 @@ tags:
   - Windows
 thumbnail: thumbnail.svg
 repo: https://github.com/sato4app/rename-files
-demo: https://sato4app.github.io/rename-files/
+site: https://sato4app.github.io/rename-files/
 ---

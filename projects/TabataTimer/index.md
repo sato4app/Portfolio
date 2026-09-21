@@ -12,6 +12,6 @@ tags:
   - PWA
 thumbnail: thumbnail.svg
 repo: https://github.com/sato4app/TabataTimer
-demo: https://sato4app.github.io/TabataTimer/
+site: https://sato4app.github.io/TabataTimer/
 ---
 実行記録を残したいなど、改善点多数なので没アプリとする。

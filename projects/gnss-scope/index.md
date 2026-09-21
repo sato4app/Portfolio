@@ -10,5 +10,5 @@ tags:
   - Android
 thumbnail: icon-512.png
 repo: https://github.com/sato4app/gnss-scope/
-demo: https://sato4app.github.io/gnss-scope/
+site: https://sato4app.github.io/gnss-scope/
 ---

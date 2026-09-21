@@ -12,5 +12,5 @@ tags:
   - Tailwind CSS
 thumbnail: icon-512.png
 repo: https://github.com/sato4app/log-timer
-demo: https://log-timer-ss4u.vercel.app/
+site: https://log-timer-ss4u.vercel.app/
 ---

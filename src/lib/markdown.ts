@@ -38,7 +38,7 @@ export type ProjectFrontmatter = {
   tags: string[];
   thumbnail: string | null;
   repo: string | null;
-  demo: string | null;
+  site: string | null;
   /** README.md 内の相対リンクを GitHub 上のURLへ変換するときに使うブランチ名 */
   branch: string;
 };
@@ -86,7 +86,7 @@ function normalizeFrontmatter(data: Record<string, unknown>, slug: string): Proj
       : [],
     thumbnail: typeof data.thumbnail === 'string' ? data.thumbnail : null,
     repo: typeof data.repo === 'string' ? data.repo : null,
-    demo: typeof data.demo === 'string' ? data.demo : null,
+    site: typeof data.site === 'string' ? data.site : null,
     branch: typeof data.branch === 'string' ? data.branch : 'main',
   };
 }

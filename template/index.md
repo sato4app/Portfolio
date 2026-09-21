@@ -9,5 +9,5 @@ summary:
 tags:
 thumbnail:
 repo:
-demo:
+site:
 ---

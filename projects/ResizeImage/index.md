@@ -8,6 +8,6 @@ tags:
   - heic-to (CDN)
 thumbnail: thumbnail.svg
 repo: https://github.com/sato4app/ResizeImage/
-demo: https://sato4app.github.io/ResizeImage/
+site: https://sato4app.github.io/ResizeImage/
 branch: main
 ---

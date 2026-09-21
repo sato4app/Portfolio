@@ -76,14 +76,14 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               リポジトリ
             </a>
           )}
-          {frontmatter.demo && (
+          {frontmatter.site && (
             <a
-              href={frontmatter.demo}
+              href={frontmatter.site}
               target="_blank"
               rel="noreferrer"
               className="text-accent underline underline-offset-4"
             >
-              デモを開く
+              サイト
             </a>
           )}
         </div>

@@ -12,5 +12,5 @@ tags:
   - Tailwind CSS
 thumbnail: icon-512.png
 repo: https://github.com/sato4app/pay-note
-demo: https://pay-note-ss4u.vercel.app/
+site: https://pay-note-ss4u.vercel.app/
 ---
