@@ -135,7 +135,9 @@ function copyProjectImages(projectDir: string, publicTargetDir: string, relative
 
 /**
  * 詳細ページの見出しは Frontmatter の title を使うため、
- * README.md 冒頭の見出し1（タイトル行）があれば取り除いて重複を防ぐ。
+ * README.md 冒頭のタイトル行があれば取り除いて重複を防ぐ。
+ * 元リポジトリの README は「## repo名 - 日本語タイトル」で始めることが多いため、
+ * 見出し1だけでなく見出し3までを対象にする。
  */
 function stripLeadingHeading(markdown: string): string {
   const lines = markdown.split(/\r?\n/);
@@ -144,8 +146,8 @@ function stripLeadingHeading(markdown: string): string {
   while (index < lines.length && lines[index].trim() === '') index++;
   if (index >= lines.length) return markdown;
 
-  // ATX形式（# タイトル）
-  if (/^#\s+\S/.test(lines[index])) {
+  // ATX形式（# タイトル / ## タイトル / ### タイトル）
+  if (/^#{1,3}\s+\S/.test(lines[index])) {
     lines.splice(index, 1);
     return lines.join('\n');
   }
