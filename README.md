@@ -199,12 +199,17 @@ Portfolio/
 │       └── icon-512.png
 ├── public/
 │   ├── .nojekyll               # GitHub Pages が _next/ を無視しないようにする
+│   ├── icons/                  # manifest から参照するアプリアイコン
 │   └── projects/               # ビルド時に自動生成（Git管理対象外）
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx
 │   │   ├── page.tsx            # 一覧ページ
 │   │   ├── globals.css
+│   │   ├── manifest.ts         # Web App Manifest（ホーム画面に追加したときの名前・アイコン）
+│   │   ├── icon.svg            # ブラウザのタブ用（マスター）
+│   │   ├── icon1.png           # 同上。SVG 非対応ブラウザ向け
+│   │   ├── apple-icon.png      # iOS のホーム画面用
 │   │   └── projects/[slug]/
 │   │       └── page.tsx        # 詳細ページ
 │   └── lib/
@@ -221,8 +226,11 @@ Portfolio/
 
 | 場所 | 内容 | 扱い |
 | --- | --- | --- |
-| `src/app/favicon.ico` | Next.js の雛形（create-next-app）に付属する既定のアイコン | 提供元の利用条件に従う |
 | `node_modules/` | npm から取得する外部パッケージ（Next.js、React、Tailwind CSS など） | 本リポジトリに含まれない。それぞれの提供元の利用条件に従う |
+
+※ サイトのアイコン（`src/app/icon.svg` と、そこから生成した
+`src/app/icon1.png`・`src/app/apple-icon.png`・`public/icons/` の PNG）は
+生成AI で作成したもので、著作権を主張していません。
 
 ※ `projects/<リポジトリ名>/` に置いているアイコン画像は、各アプリのリポジトリから
 コピーしたものです。生成AI で作成したものを含み、それらについて著作権は主張していません。

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
 
@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     template: "%s | Portfolio",
   },
   description: "これまでに作成したアプリ・ツール・電子工作のポートフォリオ",
+};
+
+// ブラウザの上部バーの色を globals.css の --background に合わせる
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d1117" },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
