@@ -15,3 +15,4 @@ repo: https://github.com/sato4app/TabataTimer
 site: https://sato4app.github.io/TabataTimer/
 ---
 実行記録を残したいなど、改善点多数なので没アプリとする。
+log-timerとして再構築。

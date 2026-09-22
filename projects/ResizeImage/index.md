@@ -10,5 +10,4 @@ tags:
 thumbnail: thumbnail.svg
 repo: https://github.com/sato4app/ResizeImage/
 site: https://sato4app.github.io/ResizeImage/
-branch: main
 ---
