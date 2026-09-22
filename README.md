@@ -3,9 +3,13 @@
 これまでに作成したアプリ・ツール・電子工作の一覧を GitHub Pages で公開するサイトです。
 
 - ハイキングアプリ
-- アプリ
-- ツール
+- アプリ(PWA対応)
 - 電子工作
+- ツール(PC用)
+- その他
+
+この並びが一覧ページのグループ表示順です（`src/app/page.tsx` の `CATEGORY_ORDER`）。
+`index.md` の `category` にこれ以外を書くと、そのカテゴリは末尾にまとめられます。
 
 公開URL: `https://sato4app.github.io/Portfolio/`
 
@@ -16,7 +20,7 @@
 | フレームワーク | Next.js 16（App Router / 静的エクスポート） |
 | 言語 | TypeScript |
 | スタイリング | Tailwind CSS v4 |
-| Markdown | gray-matter + remark |
+| Markdown | gray-matter + remark（remark-gfm / remark-html） |
 | ホスティング | GitHub Pages（GitHub Actions で自動デプロイ） |
 
 ## プロジェクトの追加方法
@@ -71,7 +75,7 @@ projects/
 ---
 title: 箕面ハイキングマップ          # 必須
 date: 2026-01-15                     # 一覧の並び順に使用（新しい順）
-category: ハイキングアプリ            # 一覧のグループ見出し
+category: ハイキングアプリ            # 一覧のグループ見出し（冒頭のカテゴリ一覧から選ぶ）
 summary: 一覧カードに表示する短い説明
 tags:
   - Leaflet.js
@@ -113,7 +117,7 @@ branch: main                         # 省略可（既定値: main）
 ---
 title: 未着手のアプリ
 date: （未作成）
-category: アプリ
+category: アプリ(PWA対応)
 summary: 一覧カードに表示する短い説明
 ---
 ```
