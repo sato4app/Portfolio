@@ -6,6 +6,7 @@ summary: 画像ファイル(png, jpeg, heic)を、アイコン用画像(png)に�
 tags:
   - OSS
   - heic-to (CDN)
+  - Windows
 thumbnail: thumbnail.svg
 repo: https://github.com/sato4app/ResizeImage/
 site: https://sato4app.github.io/ResizeImage/
