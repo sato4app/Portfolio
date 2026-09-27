@@ -96,10 +96,11 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight">Portfolio</h1>
+      <h1 className="text-3xl font-bold tracking-tight">myポートフォリオ</h1>
       <p className="mt-3 text-muted">
         これまでに作成したアプリ・ツール・電子工作の一覧<br />
-        オープンソースを基本として、興味のあるものを作成していく予定
+        そこらにあるものでも、面白さと個人的な興味を優先して作成の予定<br />
+        オープンソースが基本
       </p>
 
       {groups.length === 0 ? (

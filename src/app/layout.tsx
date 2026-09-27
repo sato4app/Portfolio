@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     default: "Portfolio",
     template: "%s | Portfolio",
   },
-  description: "これまでに作成したアプリ・ツール・電子工作のポートフォリオ",
+  description: "作成したアプリ・ツール・電子工作のポートフォリオ",
 };
 
 // ブラウザの上部バーの色を globals.css の --background に合わせる
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <header className="border-b border-line">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
             <Link href="/" className="text-lg font-bold tracking-tight">
-              Portfolio
+              myポートフォリオ
             </Link>
             <a
               href="https://github.com/sato4app"
