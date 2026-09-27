@@ -1,10 +1,10 @@
 ---
-title: MapGPSツール群
+title: ハイキングマップのGPSデータ化
 date: 2026-09-27
 category: ハイキングアプリ
-summary: 紙・画像のハイキングマップをGPSデータ化し、編集・公開するまでの6つのツール群
-PointGPS, PointMarker, GeoReferencer, MapEditor, DownloadArea, MapPublisherで構成
-
+summary: >-
+  紙・画像のハイキングマップをGPSデータ化し、編集・公開するまでの6つのツール群
+  PointGPS, PointMarker, GeoReferencer, MapEditor, DownloadArea, MapPublisherで構成
 tags:
   - OSS
   - Leaflet.js
