@@ -1,8 +1,8 @@
 ---
 title: myポートフォリオ
-date: 2026-09-22
+date: 2026-09-27
 category: アプリ(PWA対応)
-summary: 作成したアプリ・ツール・電子工作の一覧をGitHub Pagesで公開
+summary: 作成したアプリ・ツール・電子工作の一覧
 tags:
   - OSS
   - Next.js
