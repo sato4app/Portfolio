@@ -92,6 +92,41 @@ body {
   }
 }
 
+/* ---- 問い合わせダイアログ ------------------------------------------- */
+.contact-dialog {
+  width: min(92vw, 480px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--card);
+  color: var(--foreground);
+}
+
+/* 既定では左上に出るため、中央へ寄せる */
+.contact-dialog:modal {
+  margin: auto;
+}
+
+.contact-dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+.contact-field {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.contact-field:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
 /* ---- Markdown本文のスタイル ---------------------------------------- */
 /* Tailwindのtypographyプラグインを使わず、必要な要素だけを直接指定する */
 .markdown-body {
