@@ -38,6 +38,56 @@ body {
   font-family: var(--font-sans);
 }
 
+/* ---- ヘッダーの帯 --------------------------------------------------- */
+/* 高さは必ず明示する。SVG は slice で上下が切れるため、図柄は中央寄りに置く */
+.hero {
+  position: relative;
+  height: clamp(64px, 8vw, 88px);
+  overflow: hidden;
+}
+
+.hero-bg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 重ねる文字が線と干渉しないよう、左側に背景色を敷く */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--background) 16%, transparent 52%);
+}
+
+/* ルート上を光が進む。到達点は波紋を広げる */
+.hero-bg .march {
+  animation: hero-march 7s linear infinite;
+}
+
+.hero-bg .ping {
+  animation: hero-ping 3.2s ease-out infinite;
+  transform-origin: 830px 50px;
+}
+
+@keyframes hero-march {
+  from { stroke-dashoffset: 1030; }
+  to { stroke-dashoffset: 30; }
+}
+
+@keyframes hero-ping {
+  0% { transform: scale(0.6); opacity: 0.5; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg .march,
+  .hero-bg .ping {
+    animation: none;
+  }
+}
+
 /* ---- Markdown本文のスタイル ---------------------------------------- */
 /* Tailwindのtypographyプラグインを使わず、必要な要素だけを直接指定する */
 .markdown-body {
