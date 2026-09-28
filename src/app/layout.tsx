@@ -32,8 +32,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               focusable="false"
             >
               <defs>
+                {/* 地色を濃くした分、格子は --line だと沈むので muted を薄く乗せる */}
                 <pattern id="hero-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                  <path d="M30 0 H0 V30" fill="none" stroke="var(--line)" strokeWidth="1" />
+                  <path
+                    d="M30 0 H0 V30"
+                    fill="none"
+                    stroke="var(--muted)"
+                    strokeWidth="1"
+                    strokeOpacity="0.18"
+                  />
                 </pattern>
 
                 <linearGradient id="hero-tint" x1="0" y1="1" x2="1" y2="0">

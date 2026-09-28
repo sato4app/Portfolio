@@ -41,9 +41,13 @@ body {
 /* ---- ヘッダーの帯 --------------------------------------------------- */
 /* 高さは必ず明示する。SVG は slice で上下が切れるため、図柄は中央寄りに置く */
 .hero {
+  /* 本文との境を出すための地色。ライトでは一段濃く、ダークでは一段明るくなる */
+  --hero-bg: color-mix(in srgb, var(--muted) 8%, var(--background));
+
   position: relative;
   height: clamp(64px, 8vw, 88px);
   overflow: hidden;
+  background: var(--hero-bg);
 }
 
 .hero-bg {
@@ -52,12 +56,12 @@ body {
   height: 100%;
 }
 
-/* 重ねる文字が線と干渉しないよう、左側に背景色を敷く */
+/* 重ねる文字が線と干渉しないよう、左側に地色を敷く。帯の地色と同じものを使う */
 .hero-scrim {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--background) 16%, transparent 52%);
+  background: linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%);
 }
 
 /* ルート上を光が進む。到達点は波紋を広げる */
