@@ -42,7 +42,7 @@ body {
 /* 高さは必ず明示する。SVG は slice で上下が切れるため、図柄は中央寄りに置く */
 .hero {
   /* 本文との境を出すための地色。ライトでは一段濃く、ダークでは一段明るくなる */
-  --hero-bg: color-mix(in srgb, var(--muted) 8%, var(--background));
+  --hero-bg: color-mix(in srgb, var(--muted) 16%, var(--background));
 
   position: relative;
   height: clamp(64px, 8vw, 88px);
