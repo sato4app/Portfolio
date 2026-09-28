@@ -51,7 +51,11 @@ export default function ContactDialog() {
 
   return (
     <>
-      <button type="button" onClick={open} className="text-sm text-muted hover:text-accent">
+      <button
+        type="button"
+        onClick={open}
+        className="shrink-0 rounded-lg border border-line px-4 py-2 text-sm hover:border-accent hover:text-accent"
+      >
         問い合わせ
       </button>
 
@@ -87,7 +91,7 @@ export default function ContactDialog() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-5 py-5">
             <input type="hidden" name="access_key" value={ACCESS_KEY} />
             <input type="hidden" name="subject" value="ポートフォリオへの問い合わせ" />
-            <input type="hidden" name="from_name" value="myポートフォリオ" />
+            <input type="hidden" name="from_name" value="さとう" />
             {/* ボットだけが埋める隠し項目。人には見えない */}
             <input
               type="checkbox"

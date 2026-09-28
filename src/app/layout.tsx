@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import ContactDialog from "@/components/ContactDialog";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -159,17 +158,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="text-lg font-bold tracking-tight">
               myポートフォリオ
             </Link>
-            <div className="flex items-center gap-4">
-              <ContactDialog />
-              <a
-                href="https://github.com/sato4app"
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-muted hover:text-accent"
-              >
-                GitHub
-              </a>
-            </div>
+            <a
+              href="https://github.com/sato4app"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-muted hover:text-accent"
+            >
+              GitHub
+            </a>
           </div>
         </header>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ContactDialog from "@/components/ContactDialog";
 import {
   assetUrl,
   compareByDateDesc,
@@ -96,7 +97,10 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight">myポートフォリオ</h1>
+      <div className="flex items-start justify-between gap-4">
+        <h1 className="text-3xl font-bold tracking-tight">myポートフォリオ（さとう）</h1>
+        <ContactDialog />
+      </div>
       <p className="mt-3 text-muted">
         これまでに作成したアプリ・ツール・電子工作の一覧<br />
         そこらにあるものでも、面白さと個人的な興味を優先して作成の予定<br />
