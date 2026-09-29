@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ContactDialog from "@/components/ContactDialog";
+import { CATEGORIES, findCategory } from "@/lib/categories";
 import {
   assetUrl,
   compareByDateDesc,
@@ -9,7 +10,7 @@ import {
 } from "@/lib/markdown";
 
 // README.md の並びに合わせたカテゴリの表示順。ここに無いカテゴリは末尾へ回す
-const CATEGORY_ORDER = ["ハイキングアプリ", "アプリ(PWA対応)", "電子工作", "ツール(PC用)", "その他"];
+const CATEGORY_ORDER = CATEGORIES.map((category) => category.name);
 
 function groupByCategory(projects: Project[]): [string, Project[]][] {
   const groups = new Map<string, Project[]>();
@@ -114,11 +115,16 @@ export default function Home() {
         </p>
       ) : (
         groups.map(([category, items]) => (
-          <section key={category} className="mt-12">
-            <h2 className="text-sm font-bold tracking-widest text-muted uppercase">
+          <section key={category} id={findCategory(category)?.id} className="mt-14 scroll-mt-6">
+            {/* 見出しは左の縦線と件数で目立たせ、下線でカード群との区切りを付ける */}
+            <h2 className="flex items-center gap-3 border-b border-line pb-2.5 text-xl font-bold tracking-tight">
+              <span className="h-6 w-1.5 rounded-full bg-accent" aria-hidden="true" />
               {category}
+              <span className="rounded-full bg-accent/12 px-2.5 py-0.5 text-xs font-bold text-accent">
+                {items.length}件
+              </span>
             </h2>
-            <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((project) => (
                 <ProjectCard key={project.slug} project={project} />
               ))}

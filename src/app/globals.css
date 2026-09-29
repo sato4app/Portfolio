@@ -61,7 +61,10 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%);
+  /* 右端にもカテゴリのボタンを置くので、左右両側に敷く */
+  background:
+    linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%),
+    linear-gradient(270deg, var(--hero-bg) 8%, transparent 32%);
 }
 
 /* ルート上を光が進む。到達点は波紋を広げる */

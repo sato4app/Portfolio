@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { CATEGORIES, HEADER_CATEGORY_IDS } from "@/lib/categories";
 import "./globals.css";
+
+const headerCategories = HEADER_CATEGORY_IDS.map(
+  (id) => CATEGORIES.find((category) => category.id === id)!,
+);
 
 export const metadata: Metadata = {
   title: {
@@ -154,18 +159,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <div className="hero-scrim" />
           </div>
 
-          <div className="absolute inset-0 mx-auto flex max-w-5xl items-center justify-between px-6">
-            <Link href="/" className="text-lg font-bold tracking-tight">
+          <div className="absolute inset-0 mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
+            <Link href="/" className="shrink-0 text-base font-bold tracking-tight sm:text-lg">
               myポートフォリオ
             </Link>
-            <a
-              href="https://github.com/sato4app"
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm text-muted hover:text-accent"
-            >
-              GitHub
-            </a>
+
+            {/* カテゴリへのジャンプ。2列×2段で、狭い画面では短い表示名に切り替える */}
+            <nav aria-label="カテゴリ" className="grid grid-cols-2 gap-1 sm:gap-1.5">
+              {headerCategories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/#${category.id}`}
+                  className="rounded-md border border-line bg-card/85 px-2 py-0.5 text-center text-[11px] leading-4 font-bold whitespace-nowrap backdrop-blur-sm transition hover:border-accent hover:text-accent sm:px-3 sm:text-xs"
+                >
+                  <span className="sm:hidden">{category.short}</span>
+                  <span className="hidden sm:inline">{category.name}</span>
+                </Link>
+              ))}
+            </nav>
           </div>
         </header>
 
