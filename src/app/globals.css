@@ -45,7 +45,8 @@ body {
   --hero-bg: color-mix(in srgb, var(--muted) 16%, var(--background));
 
   position: relative;
-  height: clamp(64px, 8vw, 88px);
+  /* 図柄は高さに比例して縮むため、スマホでもルートと到達点が見える高さを下限にする */
+  height: clamp(76px, 8vw, 88px);
   overflow: hidden;
   background: var(--hero-bg);
 }
@@ -61,10 +62,16 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  /* 右端にもカテゴリのボタンを置くので、左右両側に敷く */
-  background:
-    linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%),
-    linear-gradient(270deg, var(--hero-bg) 8%, transparent 32%);
+  background: linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%);
+}
+
+/* 帯の右端にカテゴリのボタンを置く幅（lg 以上）では、右側にも敷く */
+@media (min-width: 1024px) {
+  .hero-scrim {
+    background:
+      linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%),
+      linear-gradient(270deg, var(--hero-bg) 8%, transparent 32%);
+  }
 }
 
 /* ルート上を光が進む。到達点は波紋を広げる */
