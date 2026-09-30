@@ -39,25 +39,36 @@ body {
 }
 
 /* ---- ヘッダーの帯 --------------------------------------------------- */
-/* 高さは必ず明示する。SVG は slice で上下が切れるため、図柄は中央寄りに置く */
+.hero-frame {
+  /* タイトルの段の高さ。図柄もこの高さで描く。
+     図柄は高さに比例して縮むため、スマホでもルートと到達点が見える高さを下限にする */
+  --hero-h: clamp(76px, 8vw, 88px);
+
+  position: relative;
+}
+
+/* ヘッダー全体の背景。lg 未満ではタイトルの下に出るカテゴリの段まで覆う */
 .hero {
   /* 本文との境を出すための地色。ライトでは一段濃く、ダークでは一段明るくなる */
   --hero-bg: color-mix(in srgb, var(--muted) 16%, var(--background));
 
-  position: relative;
-  /* 図柄は高さに比例して縮むため、スマホでもルートと到達点が見える高さを下限にする */
-  height: clamp(76px, 8vw, 88px);
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   background: var(--hero-bg);
 }
 
+/* 高さは必ず明示する。SVG は slice で上下が切れるため、図柄は中央寄りに置く */
 .hero-bg {
   display: block;
   width: 100%;
-  height: 100%;
+  height: var(--hero-h);
+  /* 格子と色味は viewBox の下まで描いてあり、はみ出させてカテゴリの段へ続ける */
+  overflow: visible;
 }
 
-/* 重ねる文字が線と干渉しないよう、左側に地色を敷く。帯の地色と同じものを使う */
+/* 重ねる文字が線と干渉しないよう、左側に地色を敷く。帯の地色と同じものを使う。
+   カテゴリの段でも格子の出方が揃うよう、ヘッダー全体に掛ける */
 .hero-scrim {
   position: absolute;
   inset: 0;

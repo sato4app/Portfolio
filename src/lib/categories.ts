@@ -17,8 +17,11 @@ export const CATEGORIES: Category[] = [
   { name: "その他", id: "others" },
 ];
 
-/** ヘッダーに2段で並べる順（上段: ハイキングアプリ・電子工作、下段: アプリ・ツール） */
-export const HEADER_CATEGORY_IDS = ["hiking", "electronics", "pwa", "tools"];
+/**
+ * ヘッダーに並べる順。横一列ではこの順に左から並ぶ。
+ * 2段のときは縦に詰めるので、上段: ハイキングアプリ・電子工作、下段: アプリ・ツール になる。
+ */
+export const HEADER_CATEGORY_IDS = ["hiking", "pwa", "electronics", "tools"];
 
 export function findCategory(name: string): Category | undefined {
   return CATEGORIES.find((category) => category.name === name);

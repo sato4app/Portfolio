@@ -29,8 +29,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ja" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         <header className="border-b border-line">
-          {/* 帯と、その上に重ねるタイトル。幅が狭いときはカテゴリを帯の下の段へ出す */}
-          <div className="relative">
+          {/* 背景と、その上に重ねるタイトル・カテゴリ */}
+          <div className="hero-frame">
             {/* 背景の装飾。等高線=地図、配線=電子工作、ルートと到達点=GPS を表す */}
             <div className="hero" aria-hidden="true">
               <svg
@@ -51,7 +51,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                     />
                   </pattern>
 
-                  <linearGradient id="hero-tint" x1="0" y1="1" x2="1" y2="0">
+                  {/* 120 より下へ塗り足しても帯の中の色味が変わらないよう、viewBox 基準で定義する */}
+                  <linearGradient
+                    id="hero-tint"
+                    gradientUnits="userSpaceOnUse"
+                    gradientTransform="scale(1200 120)"
+                    x1="0"
+                    y1="1"
+                    x2="1"
+                    y2="0"
+                  >
                     <stop offset="0" stopColor="var(--accent)" stopOpacity="0" />
                     <stop offset="1" stopColor="var(--accent)" stopOpacity="0.07" />
                   </linearGradient>
@@ -85,8 +94,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                   />
                 </defs>
 
-                <rect width="1200" height="120" fill="url(#hero-grid)" />
-                <rect width="1200" height="120" fill="url(#hero-tint)" />
+                {/* 格子と色味は viewBox の下まで塗り、lg 未満でカテゴリの段の背景にする */}
+                <rect width="1200" height="360" fill="url(#hero-grid)" />
+                <rect width="1200" height="360" fill="url(#hero-tint)" />
 
                 <g mask="url(#hero-mask)">
                   {/* 上ほど間隔を詰めて、斜面が急に見えるようにする */}
@@ -162,17 +172,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <div className="hero-scrim" />
             </div>
 
-            <div className="absolute inset-0 mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
-              <Link href="/" className="shrink-0 text-base font-bold tracking-tight sm:text-lg">
+            <div className="relative mx-auto flex max-w-5xl flex-col px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
+              <Link
+                href="/"
+                className="flex h-(--hero-h) shrink-0 items-center self-start text-base font-bold tracking-tight sm:text-lg"
+              >
                 myポートフォリオ
               </Link>
 
-              {/* 帯の中に置くのは lg 以上だけ。それより狭いとルートの到達点がボタンの裏に隠れるため、帯の下へ回す */}
-              <CategoryNav categories={headerCategories} className="hidden lg:grid" />
+              {/* タイトルの右に2段で置くのは lg 以上だけ。それより狭いとルートの到達点がボタンの裏に隠れるため、
+                  タイトルの下に横一列で並べる。入りきらない幅では横スクロールにする */}
+              <CategoryNav
+                categories={headerCategories}
+                className="-mt-1 flex max-w-full self-end overflow-x-auto pt-1 pb-2.5 scrollbar-none lg:mt-0 lg:grid lg:auto-cols-fr lg:grid-flow-col lg:grid-rows-2 lg:self-auto lg:overflow-visible lg:pt-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+              />
             </div>
-          </div>
-          <div className="mx-auto w-full max-w-5xl border-t border-line px-4 py-2 sm:px-6 lg:hidden">
-            <CategoryNav categories={headerCategories} className="grid sm:ml-auto sm:max-w-sm" />
           </div>
         </header>
 

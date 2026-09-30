@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Category } from "@/lib/categories";
 
 /**
- * ヘッダーのカテゴリジャンプ。2列×2段で並べる。
+ * ヘッダーのカテゴリジャンプ。並べ方（横一列か2段か）は className で呼び出し側が決める。
  *
  * トップページ上では自前でスクロールする。GitHub Pages は /Portfolio を /Portfolio/ へ
  * 転送するため、Link 任せだと /Portfolio/ → /Portfolio#id がページ遷移扱いになり、
@@ -28,7 +28,7 @@ export default function CategoryNav({
   }
 
   return (
-    <nav aria-label="カテゴリ" className={`grid-cols-2 gap-1.5 ${className}`}>
+    <nav aria-label="カテゴリ" className={`gap-1.5 ${className}`}>
       {categories.map((category) => (
         <Link
           key={category.id}
