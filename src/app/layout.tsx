@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
 import CategoryNav from "@/components/CategoryNav";
+import VersionCheck from "@/components/VersionCheck";
 import { CATEGORIES, HEADER_CATEGORY_IDS } from "@/lib/categories";
 import "./globals.css";
 
@@ -173,12 +173,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </div>
 
             <div className="relative mx-auto flex max-w-5xl flex-col px-4 sm:px-6 lg:flex-row lg:items-center lg:gap-6">
-              <Link
-                href="/"
-                className="flex h-(--hero-h) shrink-0 items-center self-start text-base font-bold tracking-tight sm:text-lg"
-              >
-                myポートフォリオ
-              </Link>
+              {/* タイトルは枠のないボタン。タップでバージョンを確認し、結果をすぐ右に出す */}
+              <div className="flex h-(--hero-h) max-w-full shrink-0 items-center self-start">
+                <VersionCheck className="text-base font-bold tracking-tight sm:text-lg">
+                  myポートフォリオ
+                </VersionCheck>
+              </div>
 
               {/* どの幅でも左寄せにして、右側のルートの到達点を隠さない。
                   lg 以上はタイトルのすぐ右に2段、それより狭いとタイトルの下に横一列で並べる。
