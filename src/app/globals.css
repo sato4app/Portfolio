@@ -76,15 +76,6 @@ body {
   background: linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%);
 }
 
-/* 帯の右端にカテゴリのボタンを置く幅（lg 以上）では、右側にも敷く */
-@media (min-width: 1024px) {
-  .hero-scrim {
-    background:
-      linear-gradient(90deg, var(--hero-bg) 16%, transparent 52%),
-      linear-gradient(270deg, var(--hero-bg) 8%, transparent 32%);
-  }
-}
-
 /* ルート上を光が進む。到達点は波紋を広げる */
 .hero-bg .march {
   animation: hero-march 7s linear infinite;

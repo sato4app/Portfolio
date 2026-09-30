@@ -172,7 +172,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <div className="hero-scrim" />
             </div>
 
-            <div className="relative mx-auto flex max-w-5xl flex-col px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
+            <div className="relative mx-auto flex max-w-5xl flex-col px-4 sm:px-6 lg:flex-row lg:items-center lg:gap-6">
               <Link
                 href="/"
                 className="flex h-(--hero-h) shrink-0 items-center self-start text-base font-bold tracking-tight sm:text-lg"
@@ -180,11 +180,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 myポートフォリオ
               </Link>
 
-              {/* タイトルの右に2段で置くのは lg 以上だけ。それより狭いとルートの到達点がボタンの裏に隠れるため、
-                  タイトルの下に横一列で並べる。入りきらない幅では横スクロールにする */}
+              {/* どの幅でも左寄せにして、右側のルートの到達点を隠さない。
+                  lg 以上はタイトルのすぐ右に2段、それより狭いとタイトルの下に横一列で並べる。
+                  入りきらない幅では横スクロールにする */}
               <CategoryNav
                 categories={headerCategories}
-                className="-mt-1 flex max-w-full self-end overflow-x-auto pt-1 pb-2.5 scrollbar-none lg:mt-0 lg:grid lg:auto-cols-fr lg:grid-flow-col lg:grid-rows-2 lg:self-auto lg:overflow-visible lg:pt-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+                className="-mt-1 flex max-w-full self-start overflow-x-auto pt-1 pb-2.5 scrollbar-none lg:mt-0 lg:grid lg:auto-cols-fr lg:grid-flow-col lg:grid-rows-2 lg:self-auto lg:overflow-visible lg:pt-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
               />
             </div>
           </div>
