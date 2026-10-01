@@ -1,6 +1,6 @@
 ---
 title: myポートフォリオ
-date: 2026-09-27
+date: 2026-09-30
 category: アプリ(PWA対応)
 summary: 作成したアプリ・ツール・電子工作の一覧
 tags:
