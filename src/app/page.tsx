@@ -98,8 +98,14 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      <div className="flex items-start justify-between gap-4">
-        <h1 className="text-3xl font-bold tracking-tight">myポートフォリオ（さとう）</h1>
+      {/* スマホ幅ではタイトルを詰めないよう、ボタンを次の行へ折り返す */}
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        {/* 日本語はどの文字の間でも改行されるため、語のまとまりごとに改行を禁じる。
+            狭い画面では「myポートフォリオ」と「（さとう）」の間でだけ折り返す */}
+        <h1 className="text-3xl font-bold tracking-tight">
+          <span className="inline-block">myポートフォリオ</span>
+          <span className="inline-block">（さとう）</span>
+        </h1>
         <ContactDialog />
       </div>
       <p className="mt-3 text-muted">

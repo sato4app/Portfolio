@@ -51,18 +51,33 @@ export default function ContactDialog() {
 
   return (
     <>
+      {/* 見落とされないよう、アクセント色の塗りとメールのアイコンで目立たせる */}
       <button
         type="button"
         onClick={open}
-        className="shrink-0 rounded-lg border border-line px-4 py-2 text-sm hover:border-accent hover:text-accent"
+        className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-background shadow-sm hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
-        問い合わせ
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 7 9 6 9-6" />
+        </svg>
+        お問い合わせ
       </button>
 
       {/* showModal() で開くと Esc で閉じ、フォーカスもダイアログ内に閉じ込められる */}
-      <dialog ref={dialogRef} className="contact-dialog" aria-label="問い合わせフォーム">
+      <dialog ref={dialogRef} className="contact-dialog" aria-label="お問い合わせフォーム">
         <div className="flex items-center justify-between border-b border-line px-5 py-3">
-          <h2 className="font-bold">問い合わせ</h2>
+          <h2 className="font-bold">お問い合わせ</h2>
           <button
             type="button"
             onClick={() => dialogRef.current?.close()}
@@ -90,7 +105,7 @@ export default function ContactDialog() {
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-5 py-5">
             <input type="hidden" name="access_key" value={ACCESS_KEY} />
-            <input type="hidden" name="subject" value="ポートフォリオへの問い合わせ" />
+            <input type="hidden" name="subject" value="ポートフォリオへのお問い合わせ" />
             <input type="hidden" name="from_name" value="さとう" />
             {/* ボットだけが埋める隠し項目。人には見えない */}
             <input
