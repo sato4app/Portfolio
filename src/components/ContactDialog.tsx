@@ -55,7 +55,7 @@ export default function ContactDialog() {
       <button
         type="button"
         onClick={open}
-        className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-background shadow-sm hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-accent px-4 py-2.5 text-sm font-bold text-background shadow-sm hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-5"
       >
         <svg
           viewBox="0 0 24 24"

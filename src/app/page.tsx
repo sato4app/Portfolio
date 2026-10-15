@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ContactDialog from "@/components/ContactDialog";
+import QrCodeDialog from "@/components/QrCodeDialog";
 import { CATEGORIES, findCategory } from "@/lib/categories";
 import {
   assetUrl,
@@ -8,6 +9,13 @@ import {
   isCalendarDate,
   type Project,
 } from "@/lib/markdown";
+import { buildQrPath } from "@/lib/qrcode";
+
+// 「QRコード」で出す公開 URL。開発サーバーで見ていても公開先を指すよう、固定にする
+const SITE_URL = "https://sato4app.github.io/Portfolio/";
+
+// QRコードはビルド時に1回だけ作る（静的エクスポートなので、HTML に描画済みで出る）
+const qr = buildQrPath(SITE_URL);
 
 // README.md の並びに合わせたカテゴリの表示順。ここに無いカテゴリは末尾へ回す
 const CATEGORY_ORDER = CATEGORIES.map((category) => category.name);
@@ -98,15 +106,18 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      {/* スマホ幅ではタイトルを詰めないよう、ボタンを次の行へ折り返す */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        {/* 日本語はどの文字の間でも改行されるため、語のまとまりごとに改行を禁じる。
-            狭い画面では「myポートフォリオ」と「（さとう）」の間でだけ折り返す */}
-        <h1 className="text-3xl font-bold tracking-tight">
-          <span className="inline-block">myポートフォリオ</span>
-          <span className="inline-block">（さとう）</span>
+      {/* タイトルの右に、QRコード・お問い合わせのボタンを縦に並べる。
+          スマホ幅でも横に並ぶよう、タイトルは2行に分け、文字も一段小さくする */}
+      <div className="flex items-start justify-between gap-4">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          <span className="whitespace-nowrap">my Portfolio</span>
+          <br />
+          （さとう）
         </h1>
-        <ContactDialog />
+        <div className="flex shrink-0 flex-col gap-2">
+          <QrCodeDialog url={SITE_URL} total={qr.total} path={qr.d} />
+          <ContactDialog />
+        </div>
       </div>
       <p className="mt-3 text-muted">
         これまでに作成したアプリ・ツール・電子工作の一覧<br />
