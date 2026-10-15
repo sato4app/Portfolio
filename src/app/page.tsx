@@ -11,8 +11,9 @@ import {
 } from "@/lib/markdown";
 import { buildQrPath } from "@/lib/qrcode";
 
-// 「QRコード」で出す公開 URL。開発サーバーで見ていても公開先を指すよう、固定にする
-const SITE_URL = "https://sato4app.github.io/Portfolio/";
+// 「QRコード」で出す公開 URL。next.config.mjs で basePath から組み立てている。
+// 開発サーバーで見ていても、localhost ではなく公開先を指す
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL!;
 
 // QRコードはビルド時に1回だけ作る（静的エクスポートなので、HTML に描画済みで出る）
 const qr = buildQrPath(SITE_URL);
